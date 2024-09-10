@@ -7,11 +7,11 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var createAccountRouter = require('./routes/create-account');
 var loginRouter = require('./routes/login');
-var elevateRoleRouter = require('./routes/elevate-role');
-var accountsRouter = require('./routes/accounts');
-var accountDetailRouter = require('./routes/account-detail');
-var searchRouter = require('./routes/search');
-var profileRouter = require('./routes/profile');
+// var elevateRoleRouter = require('./routes/elevate-role');
+// var accountsRouter = require('./routes/accounts');
+// var accountDetailRouter = require('./routes/account-detail');
+// var searchRouter = require('./routes/search');
+// var profileRouter = require('./routes/profile');
 
 var app = express();
 
@@ -24,15 +24,17 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, "node_modules/bootstrap/dist")));
+app.use(express.static(path.join(__dirname, "node_modules/boostrap-icons")));
 
 app.use('/', indexRouter);
 app.use('/create-account', createAccountRouter);
 app.use('/login', loginRouter);
-app.use('/elevate-role', elevateRoleRouter);
-app.use('/accounts', accountsRouter);
-app.use('/account-detail', accountDetailRouter);
-app.use('/search', searchRouter);
-app.use('/profile', profileRouter);
+// app.use('/elevate-role', elevateRoleRouter);
+// app.use('/accounts', accountsRouter);
+// app.use('/account-detail', accountDetailRouter);
+// app.use('/search', searchRouter);
+// app.use('/profile', profileRouter);
 
 
 // catch 404 and forward to error handler

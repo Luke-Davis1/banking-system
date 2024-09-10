@@ -1,11 +1,32 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="font/bootstrap-icons.css" type="text/css">
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+    <div class="container-fluid vh-100" style="margin-top: 10px">
+      <div class="" style="margin-top: 100px">
+          <div class="rounded d-flex justify-content-center">
+              <div class="col-md-4 col-sm-12 shadow-lg p-5 bg-light">
+                  <div class="text-center">
+                      <h3 class="text-primary"><%= title %></h3>
+                  </div>
+                  <div class="text-center">
+                    <a href="/login">
+                      <button class="btn btn-primary mt-5" type="button">Login</button>
+                    </a>
+                  </div>
+                  <p class="text-center mt-5">Don't have an account?
+                      <span class="text-primary"><a href="/create-account">Create Account</a></span>
+                  </p>
+              </div>
+          </div>
+      </div>
+  </div>
   </body>
 </html>
