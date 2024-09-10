@@ -6,10 +6,10 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var createAccountRouter = require('./routes/create-account');
-var loginRouter = require('./routes/login');
+var loginUserRouter = require('./routes/login-user');
 // var elevateRoleRouter = require('./routes/elevate-role');
-// var accountsRouter = require('./routes/accounts');
-// var accountDetailRouter = require('./routes/account-detail');
+var accountsRouter = require('./routes/accounts');
+var accountDetailRouter = require('./routes/account-detail');
 // var searchRouter = require('./routes/search');
 // var profileRouter = require('./routes/profile');
 
@@ -25,14 +25,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, "node_modules/bootstrap/dist")));
-app.use(express.static(path.join(__dirname, "node_modules/boostrap-icons")));
+app.use(express.static(path.join(__dirname, "node_modules/bootstrap-icons")));
 
 app.use('/', indexRouter);
 app.use('/create-account', createAccountRouter);
-app.use('/login', loginRouter);
+app.use('/login-user', loginUserRouter);
 // app.use('/elevate-role', elevateRoleRouter);
-// app.use('/accounts', accountsRouter);
-// app.use('/account-detail', accountDetailRouter);
+app.use('/accounts', accountsRouter);
+app.use('/account-detail', accountDetailRouter);
 // app.use('/search', searchRouter);
 // app.use('/profile', profileRouter);
 

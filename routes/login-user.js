@@ -1,14 +1,16 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET home page. */
+/* GET page. */
 router.get('/', function(req, res, next) {
-  res.render('create-account', { title: 'Create Account' });
+    console.log('loginuser.js: GET');
+    res.render('login-user', {});
 });
 
+/* POST page. */
 router.post('/', function(req, res, next) {
-    console.log('register.js: POST');
-    res.redirect('/accounts');
+    console.log('loginuser.js: POST');
+    res.render('login-password', {});
 });
 
 module.exports = router;
