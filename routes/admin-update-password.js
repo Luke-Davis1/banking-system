@@ -3,12 +3,12 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('change-password', {name: "John", accountNumber: "123"});
+  res.render('admin-update-password', {name: "John", accountNumber: "123"});
 });
 
 router.post("/", function(req, res, next) {
-    console.log("changing-password.js: POST");
-    res.redirect("/profile");
+    console.log("admin-update-password.js: POST");
+    res.redirect("/admin");
 })
 
 module.exports = router;

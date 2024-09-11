@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Accounts</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="font/bootstrap-icons.css" type="text/css">
+    <script>
+        function handleSearch(event){
+            event.preventDefault();
+            window.location.href = "/accounts";
+        }
+    </script>
+</head>
+<body>
+    <nav class="navbar navbar-light bg-light px-3">
+        <a class="navbar-brand text-primary" href="/">Express Bank</a>
+        <div class="navbar-text d-flex flex-column text-end">
+            <span>
+                Welcome, <%= name %>
+            </span>
+            <span>
+                Account Number: <%= accountNumber %>
+            </span>
+        </div>
+    </nav>
+    <div class="d-flex justify-content-between">
+        <h1 class="m-3">Search</h1>
+        <div class="d-flex align-items-center p-3 gap-3">
+            <a href="/profile"><button class="btn btn-primary">View Profile</button></a>
+            <a href="/"><button class="btn btn-outline-secondary">Logout</button></a>
+        </div>
+    </div>
+    <div class="container-fluid px-0">
+        <div class="rounded d-flex justify-content-center gap-5">
+            <div class="p-3 shadow-lg bg-light" style="width: 500px;">
+                <div class="d-flex justify-content-center mt-3">
+                    <form onsubmit="return handleSearch(event);" method="post">
+                        <div class="container p-0" style="width: 300px;">
+                            <label for="searchAccountNumber">Account Number</label>
+                            <input type="number" id="accountNumber" name="accountNumber" class="form-control" autofocus="autofocus" placeholder="Enter account number" required>
+                            <p id="message" class="text-danger mt-3">
+                                PROBLEM MESSAGE HERE
+                            </p>
+                        </div>
+                        <div class="text-end">
+                            <button class="btn btn-primary mt-3" type="submit">Search</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="rounded d-flex justify-content-center mt-4">
+        <button type="button" class="btn btn-primary" onclick="window.location.href='/employee'">Return to accounts</button>
+    </div>
+</body>
+</html>
