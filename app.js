@@ -9,9 +9,10 @@ var createAccountRouter = require('./routes/create-account');
 var loginUserRouter = require('./routes/login-user');
 // var elevateRoleRouter = require('./routes/elevate-role');
 var accountsRouter = require('./routes/accounts');
-var accountDetailRouter = require('./routes/account-detail');
+var accountDetailsRouter = require('./routes/account-details');
+var transferRouter = require('./routes/transfer');
 // var searchRouter = require('./routes/search');
-// var profileRouter = require('./routes/profile');
+var profileRouter = require('./routes/profile');
 
 var app = express();
 
@@ -32,9 +33,10 @@ app.use('/create-account', createAccountRouter);
 app.use('/login-user', loginUserRouter);
 // app.use('/elevate-role', elevateRoleRouter);
 app.use('/accounts', accountsRouter);
-app.use('/account-detail', accountDetailRouter);
+app.use('/account-details', accountDetailsRouter);
+app.use('/transfer', transferRouter);
 // app.use('/search', searchRouter);
-// app.use('/profile', profileRouter);
+app.use('/profile', profileRouter);
 
 
 // catch 404 and forward to error handler
