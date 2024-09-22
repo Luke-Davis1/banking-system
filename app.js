@@ -32,6 +32,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, "node_modules/bootstrap/dist")));
 app.use(express.static(path.join(__dirname, "node_modules/bootstrap-icons")));
 
+var dbCon = require('./lib/database');
+
 app.use('/', indexRouter);
 app.use('/create-account', createAccountRouter);
 app.use('/login-user', loginUserRouter);
