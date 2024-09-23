@@ -3,6 +3,8 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var session = require('express-session');
+var MySQLStore = require('express-mysql-session')(session);
 
 var indexRouter = require('./routes/index');
 var createAccountRouter = require('./routes/create-account');
@@ -33,6 +35,25 @@ app.use(express.static(path.join(__dirname, "node_modules/bootstrap/dist")));
 app.use(express.static(path.join(__dirname, "node_modules/bootstrap-icons")));
 
 var dbCon = require('./lib/database');
+
+var dbSessionPool = require('./lib/sessionPool.js');
+var sessionStore = new MySQLStore({}, dbSessionPool);
+// Necessary middleware to store session cookies in MySQL
+app.use(session({
+    key: 'session_cookie_name',
+    secret: 'session_cookie_secret1234',
+    store: sessionStore,
+    resave: false,
+    saveUninitialized: false,
+  cookie : {
+    sameSite: 'strict'
+  }
+}));
+
+app.use(function(req, res, next) {
+  res.locals.session = req.session;
+  next();
+});
 
 app.use('/', indexRouter);
 app.use('/create-account', createAccountRouter);
