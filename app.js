@@ -10,14 +10,13 @@ var indexRouter = require('./routes/index');
 var createAccountRouter = require('./routes/create-account');
 var loginUserRouter = require('./routes/login-user');
 var elevateRoleRouter = require('./routes/elevate-role');
-var accountsRouter = require('./routes/accounts');
+var dashboardRouter = require('./routes/dashboard.js');
 var accountDetailsRouter = require('./routes/account-details');
 var transferRouter = require('./routes/transfer');
 var searchRouter = require('./routes/search');
 var profileRouter = require('./routes/profile');
 var changePasswordRouter = require('./routes/change-password');
 var employeeRouter = require('./routes/employee');
-var adminRouter = require('./routes/admin');
 var adminUpdatePasswordRouter = require('./routes/admin-update-password');
 
 var app = express();
@@ -33,6 +32,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, "node_modules/bootstrap/dist")));
 app.use(express.static(path.join(__dirname, "node_modules/bootstrap-icons")));
+app.use(express.static(path.join(__dirname, "node_modules/crypto-js")));
 
 var dbCon = require('./lib/database');
 
@@ -59,14 +59,13 @@ app.use('/', indexRouter);
 app.use('/create-account', createAccountRouter);
 app.use('/login-user', loginUserRouter);
 app.use('/elevate-role', elevateRoleRouter);
-app.use('/accounts', accountsRouter);
+app.use('/dashboard', dashboardRouter);
 app.use('/account-details', accountDetailsRouter);
 app.use('/transfer', transferRouter);
 app.use('/search', searchRouter);
 app.use('/profile', profileRouter);
 app.use('/change-password', changePasswordRouter);
 app.use('/employee', employeeRouter);
-app.use('/admin', adminRouter);
 app.use('/admin-update-password', adminUpdatePasswordRouter);
 
 

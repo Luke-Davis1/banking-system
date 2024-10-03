@@ -3,19 +3,21 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  if (req.session.test === undefined) {
-    console.log("Session key test not set");
-    req.session.test = "Putting data in a session variable";
-    req.session.save(function(err) {
-      if (err) {
-        throw err;
-      }
-      console.log("Session variable set test: " + req.session.test);
-    });
+  if (req.session.loggedIn) {
+    res.redirect("/dashboard");
   } else {
-    console.log("Session variable set test: " + req.session.test);
+    // redirect to login
+    res.redirect("/login-user");
   }
-  res.render('index', { title: 'Express Bank' });
+});
+
+router.get('/logout', function(req, res) {
+  req.session.destroy(function(err) {
+    if (err) {
+      throw err;
+    }
+    res.redirect("/");
+  });
 });
 
 module.exports = router;
