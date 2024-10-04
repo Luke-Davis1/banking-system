@@ -22,9 +22,9 @@
         </div>
     </nav>
     <div class="d-flex justify-content-between">
-        <% if (locals.userType != 'admin') { %>
+        <% if (locals.userType == 'admin') { %>
             <h1 class="m-3">Admin Dashboard</h1>
-        <% else { %>
+        <% } else { %>
             <h1 class="m-3">Dashboard</h1>
         <% } %>
         <div class="d-flex align-items-center p-3 gap-3">
@@ -35,7 +35,7 @@
                     <span>
                         Viewing Customer Account: <%- locals.targetUserLoginId %>
                     </span>
-                <% else { %>
+                <% } else { %>
                     <a href="/search"><button class="btn btn-primary">Start Proxy</button></a>
                 <% } %>
             <% } %>
@@ -54,7 +54,7 @@
                         </h3>
                         <div class="d-flex justify-content-between mb-4">
                             <span>Current Balance:</span>
-                            <span><%- locals.savingsAccountBalance %></span>
+                            <span>$<%- locals.savingsAccountBalance %></span>
                         </div>
                         <div class="text-end">
                             <a href="/something-here"><button class="btn btn-primary">Deposit/Withdraw</button></a>
@@ -71,7 +71,7 @@
                         </h3>
                         <div class="d-flex justify-content-between mb-4">
                             <span>Current Balance:</span>
-                            <span><%- locals.checkingAccountBalance %></span>
+                            <span>$<%- locals.checkingAccountBalance %></span>
                         </div>
                         <div class="text-end">
                             <a href="/transfer"><button class="btn btn-primary">Transfer</button></a>

@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var dbCon = require("../lib/database");
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -19,6 +20,7 @@ router.get('/', function(req, res, next) {
       if (err) {
         throw err;
       }
+
       savingsAccountBalance = rows[1][0].savings_current_balance;
       checkingAccountBalance = rows[1][0].checking_current_balance;
       console.log("index.js: Customer account balances: Savings - " + savingsAccountBalance + " Checking - " + checkingAccountBalance);
@@ -37,12 +39,14 @@ router.get('/', function(req, res, next) {
       // need to get account data
       hasAccounts = true;
       let sql = "CALL get_account_balances(?, @savings_current_balance, @checking_current_balance); select @savings_current_balance; select @checking_current_balance";
+      console.log("Type of userLoginId ", typeof req.session.userLoginId);
       dbCon.query(sql, [req.session.userLoginId], function(err, rows) {
         if (err) {
           throw err;
         }
-        savingsAccountBalance = rows[1][0].savings_current_balance;
-        checkingAccountBalance = rows[1][0].checking_current_balance;
+
+        savingsAccountBalance = parseFloat(rows[1][0]["@savings_current_balance"]).toFixed(2);
+        checkingAccountBalance = parseFloat(rows[2][0]["@checking_current_balance"]).toFixed(2);
         console.log("index.js: Logged in user account balances: Savings - " + savingsAccountBalance + " Checking - " + checkingAccountBalance);
         res.render('dashboard', {
           userFirstName: req.session.userFirstName,

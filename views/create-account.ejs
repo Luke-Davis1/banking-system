@@ -33,8 +33,8 @@
                 // password was good, generate hash
                 let salt = CryptoJS.lib.WordArray.random(8);
                 document.getElementById("salt").value = salt;
-                let hashed = CryptoJS.SHA256(password1 + ":" + salt).toString(CryptoJS.enc.Hex);
-                document.getElementById("hash").value = hashed;
+                let hashedPassword = CryptoJS.SHA256(password1 + ":" + salt).toString(CryptoJS.enc.Hex);
+                document.getElementById("hashedPassword").value = hashedPassword;
             }
         }
     </script>
@@ -84,7 +84,7 @@
                                     <%- locals.message %>
                                 </p>
                             </div>
-                            <input type="hidden" id="hash" name="hash">
+                            <input type="hidden" id="hashedPassword" name="hashedPassword">
                             <input type="hidden" id="salt" name="salt">
                             <div class="text-center">
                                 <button class="btn btn-primary text-center mt-2" type="submit">
