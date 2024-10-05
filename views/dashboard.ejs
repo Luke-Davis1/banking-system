@@ -10,15 +10,15 @@
 </head>
 <body>
     <nav class="navbar navbar-light bg-light px-3">
-        <a class="navbar-brand text-primary" href="/">Express Bank</a>
+        <a class="navbar-brand text-primary fs-2" href="/">Express Bank</a>
         <div class="navbar-text d-flex flex-column text-end">
             <span>
                 Welcome, <%- locals.userFirstName %>
             </span>
             <span>
-                Account Number: <%- locals.userLoginId %>
+                Login ID: <%- locals.userLoginId %>
             </span>
-            <a href="/logout"><button class="btn btn-outline-secondary">Logout</button></a>
+            <a href="/logout"><button class="btn btn-outline-secondary mt-1">Logout</button></a>
         </div>
     </nav>
     <div class="d-flex justify-content-between">
@@ -29,14 +29,16 @@
         <% } %>
         <div class="d-flex align-items-center p-3 gap-3">
             <a href="/profile"><button class="btn btn-primary">View Profile</button></a>
-            <% if (locals.userType == 'employee') { %>
+            <% if (locals.userType == "employee") { %>
                 <% if (locals.targetUserLoginId) { %>
-                    <a href="/search"><button class="btn btn-primary">End Proxy</button></a>
+                    <% console.log("Made it to proxy"); %>
+                    <a href="/search"><button class="btn btn-info">End Proxy</button></a>
                     <span>
                         Viewing Customer Account: <%- locals.targetUserLoginId %>
                     </span>
                 <% } else { %>
-                    <a href="/search"><button class="btn btn-primary">Start Proxy</button></a>
+                    <% console.log("Made it to proxy"); %>
+                    <a href="/search"><button class="btn btn-outline-dark">Start Proxy</button></a>
                 <% } %>
             <% } %>
         </div>

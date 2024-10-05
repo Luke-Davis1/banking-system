@@ -17,7 +17,6 @@ var searchRouter = require('./routes/search');
 var profileRouter = require('./routes/profile');
 var changePasswordRouter = require('./routes/change-password');
 var employeeRouter = require('./routes/employee');
-var adminUpdatePasswordRouter = require('./routes/admin-update-password');
 
 var app = express();
 
@@ -66,7 +65,6 @@ app.use('/search', searchRouter);
 app.use('/profile', profileRouter);
 app.use('/change-password', changePasswordRouter);
 app.use('/employee', employeeRouter);
-app.use('/admin-update-password', adminUpdatePasswordRouter);
 
 
 // catch 404 and forward to error handler

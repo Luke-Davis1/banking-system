@@ -26,6 +26,7 @@ router.post('/', function(req, res, next) {
                 res.render('login-user', {message: "Password not valid for id '" + userLoginId + "'. Please log in again."});
             } else {
                 console.log("loginuser.js: Credentials matched");
+                console.log(req.session.userLoginId);
                 req.session.userFirstName = results[0][0].first_name;
                 req.session.loggedIn = true;
                 res.redirect("/");
@@ -33,8 +34,8 @@ router.post('/', function(req, res, next) {
         });
     } else if (req.body.userLoginId != "") {
         const user_login_id = parseInt(req.body.userLoginId);
-        const sql = "CALL get_salt(" + user_login_id + ")";
-        dbCon.query(sql, function(err, results) {
+        const sql = "CALL get_salt_and_user_type(?)";
+        dbCon.query(sql, [user_login_id], function(err, results) {
             if (err) {
                 throw err;
             }
@@ -43,8 +44,10 @@ router.post('/', function(req, res, next) {
                 res.render('login-user', {message: "Id '" + user_login_id + "' not found"});
             } else {
                 const salt = results[0][0].salt;
+                const userType = results[0][0].user_type;
                 req.session.userLoginId = user_login_id;
                 req.session.salt = salt;
+                req.session.userType = userType;
                 res.render('login-password', {
                     userLoginId: user_login_id,
                     salt: salt

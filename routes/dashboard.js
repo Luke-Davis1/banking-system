@@ -9,10 +9,14 @@ router.get('/', function(req, res, next) {
     res.redirect("/");
   }
 
+  if(req.session.userType == "admin" && req.session.targetUserLoginId) {
+    // admin does not get proxy view of financials
+    delete req.session.targetUserLoginId;
+  }
+
   let hasAccounts = false;
   let checkingAccountBalance = 0;
   let savingsAccountBalance = 0;
-  // TODO: Add logic to handle proxying with target user id
   if (req.session.targetUserLoginId) {
     // employee is proxying as customer
     let sql = "CALL get_account_balances(?, @savings_current_balance, @checking_current_balance); select @savings_current_balance; select @checking_current_balance";
@@ -23,7 +27,6 @@ router.get('/', function(req, res, next) {
 
       savingsAccountBalance = rows[1][0].savings_current_balance;
       checkingAccountBalance = rows[1][0].checking_current_balance;
-      console.log("index.js: Customer account balances: Savings - " + savingsAccountBalance + " Checking - " + checkingAccountBalance);
       res.render('dashboard', {
         userFirstName: req.session.userFirstName,
         userLoginId: req.session.userLoginId,
@@ -47,7 +50,6 @@ router.get('/', function(req, res, next) {
 
         savingsAccountBalance = parseFloat(rows[1][0]["@savings_current_balance"]).toFixed(2);
         checkingAccountBalance = parseFloat(rows[2][0]["@checking_current_balance"]).toFixed(2);
-        console.log("index.js: Logged in user account balances: Savings - " + savingsAccountBalance + " Checking - " + checkingAccountBalance);
         res.render('dashboard', {
           userFirstName: req.session.userFirstName,
           userLoginId: req.session.userLoginId,
@@ -60,7 +62,7 @@ router.get('/', function(req, res, next) {
       console.log("index.js: admin user navigating to dashboard");
       res.render('dashboard', {
         userFirstName: req.session.userFirstName,
-        userLoginAccountNumber: req.session.userLoginId,
+        userLoginId: req.session.userLoginId,
         userType: req.session.userType
       });
     }
