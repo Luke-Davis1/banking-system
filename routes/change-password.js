@@ -103,33 +103,33 @@ router.post("/", function(req, res, next) {
     } else {
       // admin updating password on behalf of another user
       let sql = "CALL update_password(?, ?, ?, @result_message); select @result_message;";
-          dbCon.query(sql, [req.session.targetUserLoginId, newPasswordHash, newSalt], function(error, result) {
-            if (error) {
-              throw error;
-            }
+      dbCon.query(sql, [req.session.targetUserLoginId, newPasswordHash, newSalt], function(error, result) {
+        if (error) {
+          throw error;
+        }
 
-            // Get the result message
-            let result_message = result[1][0]["@result_message"];
-            if (result_message == "Password update successful") {
-              // Route back to change-password with some kind of sucess message
-              res.render("change-password", {
-                userLoginId: req.session.userLoginId,
-                userFirstName: req.session.userFirstName,
-                userType: req.session.userType,
-                targetUserLoginId: req.session.targetUserLoginId,
-                salt: newSalt,
-                success_message: result_message
-              });
-            } else {
-              res.render("change-password", {
-                userLoginId: req.session.userLoginId,
-                userFirstName: req.session.userFirstName,
-                userType: req.session.userType,
-                salt: currentSalt,
-                message: "Something went wrong updating the password. Try again."
-              });
-            }
+        // Get the result message
+        let result_message = result[1][0]["@result_message"];
+        if (result_message == "Password update successful") {
+          // Route back to change-password with some kind of sucess message
+          res.render("change-password", {
+            userLoginId: req.session.userLoginId,
+            userFirstName: req.session.userFirstName,
+            userType: req.session.userType,
+            targetUserLoginId: req.session.targetUserLoginId,
+            salt: newSalt,
+            success_message: result_message
           });
+        } else {
+          res.render("change-password", {
+            userLoginId: req.session.userLoginId,
+            userFirstName: req.session.userFirstName,
+            userType: req.session.userType,
+            salt: currentSalt,
+            message: "Something went wrong updating the password. Try again."
+          });
+        }
+      });
     }
 })
 

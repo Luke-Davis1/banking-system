@@ -16,8 +16,6 @@ router.get('/', function(req, res, next) {
     res.redirect("/");
   }
 
-  console.log("SEARCH GET: state of targetUserLoginId", req.session.targetUserLoginId);
-
   res.render('search', {
     userLoginId: req.session.userLoginId,
     userFirstName: req.session.userFirstName
@@ -73,7 +71,7 @@ router.post('/', function(req, res, next) {
           console.log("search.js: saving the targetUserLoginId");
 
           // redirect to the home page. Let that redirect the user to the next correct spot
-          res.redirect("/profile");
+          res.redirect("/change-password");
         });
       }
     } else {
