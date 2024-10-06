@@ -51,11 +51,6 @@ router.post("/", function(req, res, next) {
     // Get all the variables
     let {newPasswordHash, newSalt, currentHash, currentSalt} = req.body;
 
-    console.log(newPasswordHash);
-    console.log(newSalt);
-    console.log(currentHash);
-    console.log(currentSalt);
-
     // Verify current password hash
     if (currentHash) {
       let sql = "CALL check_credentials(?, ?);";

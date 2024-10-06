@@ -20,4 +20,12 @@ router.get('/logout', function(req, res) {
   });
 });
 
+router.get('/remove-proxy', function(req, res) {
+  console.log("REMOVING targetUserLoginId", req.session.targetUserLoginId);
+  delete req.session.targetUserLoginId;
+  console.log("After removal state:", req.session.targetUserLoginId);
+  // redirect back to search
+  res.redirect("/search");
+})
+
 module.exports = router;

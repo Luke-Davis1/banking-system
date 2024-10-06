@@ -9,28 +9,32 @@
     <link rel="stylesheet" href="font/bootstrap-icons.css" type="text/css">
     <script>
         function handleSearch(event){
-            event.preventDefault();
-            window.location.href = "/accounts";
+            let targetUserLoginId = document.getElementById("targetUserLoginId").value;
+            if (targetUserLoginId == "") {
+                document.getElementById("message").innerHTML = "Please enter a login ID";
+                document.getElementById("message").classList.add("border", "border-danger", "border-3");
+                event.preventDefault();
+            }
         }
     </script>
 </head>
 <body>
     <nav class="navbar navbar-light bg-light px-3">
-        <a class="navbar-brand text-primary" href="/">Express Bank</a>
+        <a class="navbar-brand text-primary fs-2" href="/">Express Bank</a>
         <div class="navbar-text d-flex flex-column text-end">
             <span>
-                Welcome, <%= name %>
+                Welcome, <%- locals.userFirstName %>
             </span>
             <span>
-                Account Number: <%= accountNumber %>
+                Login ID: <%- locals.userLoginId %>
             </span>
+            <a href="/logout"><button class="btn btn-outline-secondary mt-1">Logout</button></a>
         </div>
     </nav>
     <div class="d-flex justify-content-between">
         <h1 class="m-3">Search</h1>
         <div class="d-flex align-items-center p-3 gap-3">
             <a href="/profile"><button class="btn btn-primary">View Profile</button></a>
-            <a href="/"><button class="btn btn-outline-secondary">Logout</button></a>
         </div>
     </div>
     <div class="container-fluid px-0">
@@ -39,10 +43,10 @@
                 <div class="d-flex justify-content-center mt-3">
                     <form onsubmit="return handleSearch(event);" method="post">
                         <div class="container p-0" style="width: 300px;">
-                            <label for="searchAccountNumber">Account Number</label>
-                            <input type="number" id="accountNumber" name="accountNumber" class="form-control" autofocus="autofocus" placeholder="Enter account number" required>
+                            <label for="targetUserLoginId">Login ID</label>
+                            <input type="number" id="targetUserLoginId" name="targetUserLoginId" class="form-control" autofocus="autofocus" placeholder="Enter login ID">
                             <p id="message" class="text-danger mt-3">
-                                PROBLEM MESSAGE HERE
+                                <%- locals.message %>
                             </p>
                         </div>
                         <div class="text-end">
@@ -54,7 +58,7 @@
         </div>
     </div>
     <div class="rounded d-flex justify-content-center mt-4">
-        <button type="button" class="btn btn-primary" onclick="window.location.href='/employee'">Return to accounts</button>
+        <button type="button" class="btn btn-primary" onclick="window.location.href='/dashboard'">Return to dashboard</button>
     </div>
 </body>
 </html>

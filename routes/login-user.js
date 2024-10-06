@@ -29,7 +29,15 @@ router.post('/', function(req, res, next) {
                 console.log(req.session.userLoginId);
                 req.session.userFirstName = results[0][0].first_name;
                 req.session.loggedIn = true;
-                res.redirect("/");
+                req.session.save(function(err) {
+                    if (err) {
+                        throw err;
+                    }
+                    console.log("login-user.js: Successful login cookie: " + req.session.userFirstName);
+    
+                    // redirect to the home page. Let that redirect the user to the next correct spot
+                    res.redirect("/");
+                });
             }
         });
     } else if (req.body.userLoginId != "") {
@@ -48,12 +56,18 @@ router.post('/', function(req, res, next) {
                 req.session.userLoginId = user_login_id;
                 req.session.salt = salt;
                 req.session.userType = userType;
-                res.render('login-password', {
-                    userLoginId: user_login_id,
-                    salt: salt
+                req.session.save(function(err) {
+                    if (err) {
+                        throw err;
+                    }
+                    console.log("login-user.js: Successful login cookie: " + req.session.userLoginId);
+
+                    res.render('login-password', {
+                        userLoginId: req.session.userLoginId,
+                        salt: req.session.salt
+                    });
                 });
             }
-
         });
     }
 });

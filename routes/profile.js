@@ -20,11 +20,11 @@ router.get('/', function(req, res, next) {
 
       const userDetails = rows[0];
       if (userDetails.length > 0) {
-        const {firstName, lastName, user_login_id, email} = userDetails[0];
+        const {first_name, last_name, user_login_id, email} = userDetails[0];
         res.render('profile', {
           targetUserLoginId: user_login_id,
-          targetUserFirstName: firstName,
-          targetUserLastName: lastName,
+          targetUserFirstName: first_name,
+          targetUserLastName: last_name,
           targetUserEmail: email,
           userType: req.session.userType,
           userLoginId: req.session.userLoginId,

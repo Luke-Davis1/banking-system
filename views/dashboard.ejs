@@ -21,23 +21,21 @@
             <a href="/logout"><button class="btn btn-outline-secondary mt-1">Logout</button></a>
         </div>
     </nav>
-    <div class="d-flex justify-content-between">
+    <div class="d-flex justify-content-between align-items-center">
         <% if (locals.userType == 'admin') { %>
             <h1 class="m-3">Admin Dashboard</h1>
         <% } else { %>
             <h1 class="m-3">Dashboard</h1>
         <% } %>
+        <% if (locals.targetUserLoginId > 0) { %>
+            <span class="fs-4">Viewing Customer: <%- locals.targetUserLoginId %></span>
+        <% } %>
         <div class="d-flex align-items-center p-3 gap-3">
             <a href="/profile"><button class="btn btn-primary">View Profile</button></a>
             <% if (locals.userType == "employee") { %>
-                <% if (locals.targetUserLoginId) { %>
-                    <% console.log("Made it to proxy"); %>
-                    <a href="/search"><button class="btn btn-info">End Proxy</button></a>
-                    <span>
-                        Viewing Customer Account: <%- locals.targetUserLoginId %>
-                    </span>
+                <% if (locals.targetUserLoginId > 0) { %>
+                    <a href="/remove-proxy"><button class="btn btn-outline-dark">End Proxy</button></a>
                 <% } else { %>
-                    <% console.log("Made it to proxy"); %>
                     <a href="/search"><button class="btn btn-outline-dark">Start Proxy</button></a>
                 <% } %>
             <% } %>
