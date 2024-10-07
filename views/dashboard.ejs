@@ -57,8 +57,7 @@
                             <span>$<%- locals.savingsAccountBalance %></span>
                         </div>
                         <div class="text-end">
-                            <a href="/something-here"><button class="btn btn-primary">Deposit/Withdraw</button></a>
-                            <a href="/transfer"><button class="btn btn-primary">Transfer</button></a>
+                            <a href="/transfer?accountType=savings"><button class="btn btn-primary">Manage Funds</button></a>
                             <a href="/account-details"><button class="btn btn-secondary">Details</button></a>
                         </div>
                     </div>
@@ -74,15 +73,15 @@
                             <span>$<%- locals.checkingAccountBalance %></span>
                         </div>
                         <div class="text-end">
-                            <a href="/transfer"><button class="btn btn-primary">Transfer</button></a>
+                            <a href="/transfer?accountType=checking"><button class="btn btn-primary">Manage Funds</button></a>
                             <a href="/account-details"><button class="btn btn-secondary">Details</button></a>
                         </div>
                     </div>
                 </div>
             <% } else { %>
                 <div class="d-flex justify-content-center gap-5">
-                    <button class="btn btn-primary" onclick="window.location.href='/search'">Update customer password</button>
-                    <button class="btn btn-primary" onclick="window.location.href='/elevate-role'">Elevate Roles</button>
+                    <a href="/search"><button class="btn btn-primary">Update customer password</button></a>
+                    <a href="/elevate-role"><button class="btn btn-primary">Manage Roles</button></a>
                 </div>
             <% } %>
         </div>

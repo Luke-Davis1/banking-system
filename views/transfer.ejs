@@ -4,66 +4,163 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE-edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tranfer</title>
+    <title>Transfer</title>
     <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="font/bootstrap-icons.css" type="text/css">
+    <style>
+        .hidden { display: none; }
+    </style>
     <script>
-        function handleTransfer(event){
-            event.preventDefault();
-            window.location.href = "/accounts";
-        }
+         document.addEventListener("DOMContentLoaded", () => {
+            const depositForm = document.getElementById("depositForm");
+            const withdrawForm = document.getElementById("withdrawForm");
+            const transferForm = document.getElementById("transferForm");
+            const backButton = document.getElementById("back-button");
+            const formContainer = document.getElementById("form-container");
+            const buttonContainer = document.getElementById("button-container");
+
+            // Button options
+            const depositOption = document.getElementById("depositButton");
+            const withdrawOption = document.getElementById("withdrawButton");
+            const transferOption = document.getElementById("transferButton");
+
+            // Add event handlers for button clicks
+            depositOption.onclick = () => showForm(depositForm);
+            withdrawOption.onclick = () => showForm(withdrawForm);
+            transferOption.onclick = () => showForm(transferForm);
+            backButton.onclick = () => hideAllForms();
+
+            function showForm(form) {
+                hideAllForms();
+                formContainer.classList.remove("hidden");
+                form.classList.remove("hidden");
+                buttonContainer.classList.add("hidden");
+                backButton.classList.remove("hidden");
+            }
+
+            function hideAllForms() {
+                depositForm.classList.add("hidden");
+                withdrawForm.classList.add("hidden");
+                transferForm.classList.add("hidden");
+                formContainer.classList.add("hidden");
+                buttonContainer.classList.remove("hidden");
+                backButton.classList.add("hidden");
+            }
+        });
     </script>
 </head>
 <body>
     <nav class="navbar navbar-light bg-light px-3">
-        <a class="navbar-brand text-primary" href="/">Express Bank</a>
+        <a class="navbar-brand text-primary fs-2" href="/">Express Bank</a>
         <div class="navbar-text d-flex flex-column text-end">
             <span>
-                Welcome, <%= name %>
+                Welcome, <%- locals.userFirstName %>
             </span>
             <span>
-                Account Number: <%= accountNumber %>
+                Login ID: <%- locals.userLoginId %>
             </span>
+            <a href="/logout"><button class="btn btn-outline-secondary mt-1">Logout</button></a>
         </div>
     </nav>
-    <div class="d-flex justify-content-between">
+    <div class="d-flex justify-content-between align-items-center">
         <h1 class="m-3">Transfer funds</h1>
+        <% if (locals.targetUserLoginId > 0) { %>
+            <span class="fs-4">Viewing Customer: <%- locals.targetUserLoginId %></span>
+        <% } %>
         <div class="d-flex align-items-center p-3 gap-3">
             <a href="/profile"><button class="btn btn-primary">View Profile</button></a>
-            <a href="/"><button class="btn btn-outline-secondary">Logout</button></a>
+            <% if (locals.userType == "employee") { %>
+                <% if (locals.targetUserLoginId > 0) { %>
+                    <a href="/remove-proxy"><button class="btn btn-outline-dark">End Proxy</button></a>
+                <% } else { %>
+                    <a href="/search"><button class="btn btn-outline-dark">Start Proxy</button></a>
+                <% } %>
+            <% } %>
         </div>
     </div>
     <div class="container-fluid px-0">
-        <div class="rounded d-flex justify-content-center gap-5">
-            <div class="p-3 shadow-lg bg-light" style="width: 500px;">
-                <div class="d-flex justify-content-center mt-3">
-                    <form onsubmit="return handleTransfer(event);" method="post">
-                        <div class="container p-0" style="width: 300px;">
-                            <label for="accountNumber">Account Number</label>
-                            <input type="number" id="accountNumber" name="accountNumber" class="form-control" autofocus="autofocus" placeholder="Enter account number" required>
-                            <label for="accountType" class="mt-3">Account Type</label>
-                            <select name="accountType" id="accountType" class="form-select" required>
-                                <option value="checking" selected>Checking</option>
-                                <option value="savings">Savings</option>
-                            </select>
-                            <label for="amount" class="mt-3">Amount</label>
-                            <input type="number" name="amount" id="amount" placeholder="Enter amount" required class="form-control">
-                            <label for="memo" class="mt-3">Memo</label>
-                            <input type="text" id="memo" name="memo" class="form-control" placeholder="Enter memo" required>
-                            <p id="message" class="text-danger mt-3">
-                                PROBLEM MESSAGE HERE
-                            </p>
+        <div id="button-container" class="d-flex justify-content-center gap-3 mt-5">
+            <div class="row justify-content-center">
+                <div class="col-md-4">
+                    <div class="text-center shadow-lg bg-light p-3 rounded" style="width: 300px;">
+                        <div class="d-flex flex-column gap-2">
+                            <h5>Deposit</h5>
+                            <i class="bi bi-plus" style="font-size: 50px;"></i>
+                            <button class="btn btn-primary" id="depositButton">Select</button>
                         </div>
-                        <div class="text-end">
-                            <button class="btn btn-primary mt-3" type="submit">Transfer</button>
-                        </div>
-                    </form>
+                    </div>
                 </div>
+                <div class="col-md-4">
+                    <div class="text-center shadow-lg bg-light p-3 rounded" style="width: 300px;">
+                        <div class="d-flex flex-column gap-2">
+                            <h5>Withdraw</h5>
+                            <i class="bi bi-dash" style="font-size: 50px;"></i>
+                            <button class="btn btn-primary" id="withdrawButton">Select</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="text-center shadow-lg bg-light p-3 rounded" style="width: 300px;">
+                        <div class="d-flex flex-column gap-2">
+                            <h5>Transfer Between Accounts</h5>
+                            <i class="bi bi-arrow-left-right" style="font-size: 50px;"></i>
+                            <button class="btn btn-primary" id="transferButton">Select</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="rounded d-flex justify-content-center gap-5">
+            <div id="form-container" class="p-3 shadow-lg bg-light justify-content-center hidden" style="width: 500px;">
+                <form id="depositForm" class="hidden" method="post">
+                    <h2>Deposit Form</h2>
+                    <input type="hidden" name="transactionType" value="deposit" />
+                    <input type="hidden" name="sendingAccountType" value="<%- locals.selectedAccountType %>" />
+                    <label for="amount" class="mt-3">Amount</label>
+                    <input type="number" name="amount" placeholder="Enter amount" />
+                    <label for="memo" class="mt-3">Memo</label>
+                    <input type="text" name="memo" placeholder="Enter memo" value="Deposit"/>
+                    <button type="submit">Submit</button>
+                </form>
+                <form id="withdrawForm" class="hidden" method="post">
+                    <h2>Withdraw Form</h2>
+                    <input type="hidden" name="transactionType" value="withdraw" />
+                    <input type="hidden" name="sendingAccountType" value="<%- locals.selectedAccountType %>" />
+                    <label for="amount" class="mt-3">Amount</label>
+                    <input type="number" name="amount" placeholder="Enter amount" />
+                    <label for="memo" class="mt-3">Memo</label>
+                    <input type="text" name="memo" placeholder="Enter memo" value="Withdraw"/>
+                    <button type="submit">Submit</button>
+                </form>
+                <form id="transferForm" class="hidden" method="post">
+                    <h2>Transfer Form</h2>
+                    <input type="hidden" name="transactionType" value="transfer" />
+                    <input type="hidden" name="sendingAccountType" value="<%- locals.selectedAccountType %>" />
+                    <label for="destinationUserAccount">User Account Number</label>
+                    <input type="number" id="destinationUserAccount" name="destinationUserAccount" class="form-control" autofocus="autofocus" placeholder="Enter account number">
+                    <label for="accountType" class="mt-3">Account Type</label>
+                    <select name="accountType" id="accountType" class="form-select" required>
+                        <option value="checking" selected>Checking</option>
+                        <option value="savings">Savings</option>
+                    </select>
+                    <label for="amount" class="mt-3">Amount</label>
+                    <input type="number" name="amount" placeholder="Enter amount" />
+                    <label for="memo" class="mt-3">Memo</label>
+                    <input type="text" name="memo" placeholder="Enter memo" value="Transfer"/>
+                    <button type="submit">Submit</button>
+                </form>
+                <p id="message" class="text-danger mt-3">
+                    <%- locals.message %>
+                </p>
+                <p id="success_message" class="text-success mt-3">
+                    <%- locals.success_message %>
+                </p>
+                <button id="back-button" class="hidden">Back to transfer options</button>
             </div>
         </div>
     </div>
     <div class="rounded d-flex justify-content-center mt-4">
-        <button type="button" class="btn btn-primary" onclick="window.location.href='/accounts'">Return to accounts</button>
+        <a href="/dashboard"><button type="button" class="btn btn-primary">Back to dashboard</button></a>
     </div>
 </body>
 </html>
