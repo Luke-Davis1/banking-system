@@ -30,4 +30,36 @@ router.get('/', function(req, res, next) {
   }
 });
 
+router.post("/", function(req, res, next) {
+  // Extract all the guaranteed variables
+  const {transactionType, sendingAccountType, amount, memo} = req.body;
+  
+  // determine if user is proxied first
+  if (req.session.targetUserLoginId) {
+    // determine which transaction type is happening
+    if (transactionType == "transfer") {
+      // Need the destination user login id and account type
+      const {destinationUserLoginId, destinationAccountType} = req.body;
+
+      // Verify that the user isn't sending money to the exact same account
+      if (req.session.userLoginId == parseInt(destinationUserLoginId) && sendingAccountType == destinationAccountType) {
+        // user is trying to send money to the exact same account
+        res.render(`/transfer?accountType=${sendingAccountType}`, {
+          userFirstName: req.session.userFirstName,
+          userLoginId: req.session.userLoginId,
+          targetUserLoginId: req.session.targetUserLoginId,
+          selectedAccountType: selectedAccountType,
+          message: "Doesn't make sense sending money to the exact same account and account type, try again."
+        })
+      }
+
+      // Transfer the money
+      let sql = "CALL "
+    }
+  } else {
+    // normal user in their own account
+  }
+  res.redirect("/transfer");
+});
+
 module.exports = router;
