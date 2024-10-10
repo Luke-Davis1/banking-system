@@ -56,8 +56,10 @@
                             <span>Current Balance:</span>
                             <span>$<%- locals.savingsAccountBalance %></span>
                         </div>
-                        <div class="text-end">
-                            <a href="/transfer?accountType=savings"><button class="btn btn-primary">Manage Funds</button></a>
+                        <div class="d-flex justify-content-end gap-2">
+                            <form method="post">
+                                <button class="btn btn-primary" type="submit" name="selectedAccountType" value="savings">Manage Funds</button>
+                            </form>
                             <a href="/account-details"><button class="btn btn-secondary">Details</button></a>
                         </div>
                     </div>
@@ -72,8 +74,10 @@
                             <span>Current Balance:</span>
                             <span>$<%- locals.checkingAccountBalance %></span>
                         </div>
-                        <div class="text-end">
-                            <a href="/transfer?accountType=checking"><button class="btn btn-primary">Manage Funds</button></a>
+                        <div class="d-flex justify-content-end gap-2">
+                            <form method="post">
+                                <button class="btn btn-primary" type="submit" name="selectedAccountType" value="checking">Manage Funds</button>
+                            </form>
                             <a href="/account-details"><button class="btn btn-secondary">Details</button></a>
                         </div>
                     </div>
@@ -84,6 +88,7 @@
                     <a href="/elevate-role"><button class="btn btn-primary">Manage Roles</button></a>
                 </div>
             <% } %>
+            <input type="hidden" id="selectedAccountType" name="selectedAccountType" />
         </div>
     </div>
 </body>

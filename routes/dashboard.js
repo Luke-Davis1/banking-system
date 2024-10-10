@@ -68,4 +68,21 @@ router.get('/', function(req, res, next) {
   }
 });
 
+router.post("/", function(req, res, next) {
+  // Setting the desired account type
+  console.log("MADE IT TO POST FOR dashboard");
+  const selectedAccountType = req.body.selectedAccountType;
+
+  req.session.selectedAccountType = selectedAccountType;
+
+  req.session.save(function(err) {
+    if (err) {
+        throw err;
+    }
+    console.log("dashboard.js: Going to transfer page for : " + req.session.selectedAccountType);
+
+    res.redirect("/transfer");
+});
+});
+
 module.exports = router;

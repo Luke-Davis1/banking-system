@@ -43,13 +43,30 @@
                 buttonContainer.style.display = "flex";
                 backButton.style.display = "none";
             }
+
+            // selected form
+            const selectedForm = "<%- locals.selectedForm %>";
+
+            // Show the selected form, if there is one
+            if (selectedForm) {
+                switch(selectedForm) {
+                    case "deposit":
+                        showForm(depositForm);
+                        break;
+                    case "withdraw":
+                        showForm(withdrawForm);
+                        break;
+                    default:
+                        showForm(transferForm);
+                        break;
+                }
+            }
         });
     </script>
     <script>
         function handleFormSubmit(event) {
             // Get the amount to verify it is not negative
             const amount = document.querySelector("#form-container form[style*='display: block'] input[name='amount']") ? parseFloat(document.querySelector("#form-container form[style*='display: block'] input[name='amount']").value).toFixed(2) : 0.00;
-            console.log("Current val of amount: ", amount);
             if (amount <= 0 || isNaN(amount)) {
                 document.getElementById("message").innerHTML = "Please enter an amount greater than 0";
                 document.querySelector("#form-container form[style*='display: block'] input[name='amount']").classList.add("border", "border-danger", "border-3");
@@ -60,7 +77,6 @@
 
             // Verify that all transfers have a valid memo
             const memo = document.querySelector("#form-container form[style*='display: block'] input[name='memo']") ? document.querySelector("#form-container form[style*='display: block'] input[name='memo']").value : "";
-            console.log("HERE IS what I found: ", memo);
             if (memo == "") {
                 document.getElementById("message").innerHTML = "Please enter a valid memo";
                 document.querySelector("#form-container form[style*='display: block'] input[name='memo']").classList.add("border", "border-danger", "border-3");
