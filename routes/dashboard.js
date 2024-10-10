@@ -71,18 +71,35 @@ router.get('/', function(req, res, next) {
 router.post("/", function(req, res, next) {
   // Setting the desired account type
   console.log("MADE IT TO POST FOR dashboard");
-  const selectedAccountType = req.body.selectedAccountType;
+  const {selectedAccountType, selectedDetailsView} = req.body;
+  // const selectedAccountType = req.body.selectedAccountType;
 
-  req.session.selectedAccountType = selectedAccountType;
+  if (selectedAccountType) {
+    // trying to transact
+    req.session.selectedAccountType = selectedAccountType;
+  
+    req.session.save(function(err) {
+      if (err) {
+          throw err;
+      }
+      console.log("dashboard.js: Going to transfer page for : " + req.session.selectedAccountType);
+  
+      res.redirect("/transfer");
+    });
+  } else {
+    // trying to view details
+    req.session.selectedDetailsView = selectedDetailsView;
+  
+    req.session.save(function(err) {
+      if (err) {
+          throw err;
+      }
+      console.log("dashboard.js: Going to details page for : " + req.session.selectedDetailsView);
+  
+      res.redirect("/account-details");
+    });
+  }
 
-  req.session.save(function(err) {
-    if (err) {
-        throw err;
-    }
-    console.log("dashboard.js: Going to transfer page for : " + req.session.selectedAccountType);
-
-    res.redirect("/transfer");
-});
 });
 
 module.exports = router;

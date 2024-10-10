@@ -84,7 +84,23 @@
             } else {
                 document.querySelector("#form-container form[style*='display: block'] input[name='memo']").classList.remove("border", "border-danger", "border-3");
             }
-        }
+
+            // Handle empty value if transaction type is transfer
+            const transactionType = document.querySelector("#form-container form[style*='display: block'] input[name='transactionType']") ? document.querySelector("#form-container form[style*='display: block'] input[name='transactionType']").value : "";
+
+            if (transactionType == "transfer") {
+                // verify destination account is not negative and not empty
+                const destinationAccountId = document.querySelector("#form-container form[style*='display: block'] input[name='destinationUserLoginId']").value;
+
+                if (destinationAccountId == "" || parseInt(destinationAccountId) < 0) {
+                    event.preventDefault();
+                    document.querySelector("#form-container form[style*='display: block'] input[name='destinationUserLoginId']").classList.add("border", "border-danger", "border-3");
+                    document.getElementById("message").innerHTML = "Please enter a valid destination account id";
+                } else {
+                    document.querySelector("#form-container form[style*='display: block'] input[name='destinationUserLoginId']").classList.remove("border", "border-danger", "border-3");
+                }
+            }
+        }   
     </script>
 </head>
 <body>
