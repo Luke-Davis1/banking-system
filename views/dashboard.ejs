@@ -88,8 +88,22 @@
                 </div>
             <% } else { %>
                 <div class="d-flex justify-content-center gap-5">
-                    <a href="/search"><button class="btn btn-primary">Update customer password</button></a>
-                    <a href="/elevate-role"><button class="btn btn-primary">Manage Roles</button></a>
+
+                        <div class="text-center shadow-lg bg-light p-3 rounded" style="width: 300px;">
+                            <div class="d-flex flex-column gap-2">
+                                <h5>Update User Passwords</h5>
+                                <i class="bi bi-lock" style="font-size: 50px;"></i>
+                                <a href="/search"><button class="btn btn-primary">Select</button></a>
+                            </div>
+                        </div>
+
+                        <div class="text-center shadow-lg bg-light p-3 rounded" style="width: 300px;">
+                            <div class="d-flex flex-column gap-2">
+                                <h5>Manage User Roles</h5>
+                                <i class="bi bi-person-check" style="font-size: 50px;"></i>
+                                <a href="/elevate-role"><button class="btn btn-primary">Select</button></a>
+                            </div>
+                        </div>
                 </div>
             <% } %>
             <input type="hidden" id="selectedAccountType" name="selectedAccountType" />

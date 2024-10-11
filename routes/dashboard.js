@@ -26,7 +26,6 @@ router.get('/', function(req, res, next) {
 
       savingsAccountBalance = parseFloat(rows[1][0]["@savings_current_balance"]).toFixed(2);
       checkingAccountBalance = parseFloat(rows[2][0]["@checking_current_balance"]).toFixed(2);
-      console.log("ATTEMPTING TO RENDER DASHBOARD OF PROXY");
       return res.render('dashboard', {
         userFirstName: req.session.userFirstName,
         userLoginId: req.session.userLoginId,
@@ -70,7 +69,6 @@ router.get('/', function(req, res, next) {
 
 router.post("/", function(req, res, next) {
   // Setting the desired account type
-  console.log("MADE IT TO POST FOR dashboard");
   const {selectedAccountType, selectedDetailsView} = req.body;
   // const selectedAccountType = req.body.selectedAccountType;
 

@@ -10,13 +10,14 @@ router.get('/', function(req, res, next) {
     res.redirect("/");
   }
 
-  console.log("SELECTED ACCOUNT TYPE:", req.session.selectedAccountType);
   // If there is a target user id, employee is moving money on behalf of a customer
   if (req.session.targetUserLoginId) {
     // render with target user login id and their account type
+    console.log("EMPLOYEE has targetUser");
     res.render("transfer", {
       userFirstName: req.session.userFirstName,
       userLoginId: req.session.userLoginId,
+      userType: req.session.userType,
       targetUserLoginId: req.session.targetUserLoginId,
       selectedAccountType: req.session.selectedAccountType
     });
@@ -25,6 +26,7 @@ router.get('/', function(req, res, next) {
     res.render("transfer", {
       userFirstName: req.session.userFirstName,
       userLoginId: req.session.userLoginId,
+      userType: req.session.userType,
       selectedAccountType: req.session.selectedAccountType
     })
   }

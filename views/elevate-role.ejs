@@ -8,47 +8,56 @@
     <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="font/bootstrap-icons.css" type="text/css">
     <script>
-        function handleElevate(event){
-            event.preventDefault();
-            window.location.href = "/admin";
+        function handleUpdate(event){
+            // Make sure the id is not empty and a valid positive integer
+            const userLoginIdToUpdate = document.getElementById("userLoginIdToUpdate").value;
+
+            if (userLoginIdToUpdate == "" || parseInt(userLoginIdToUpdate) < 0) {
+                event.preventDefault();
+                document.getElementById("message").innerHTML = "Please enter a valid user login ID";
+                document.getElementById("userLoginIdToUpdate").classList.add("border", "border-danger", "border-3");
+            }
         }
     </script>
 </head>
 <body>
     <nav class="navbar navbar-light bg-light px-3">
-        <a class="navbar-brand text-primary" href="/">Express Bank</a>
+        <a class="navbar-brand text-primary fs-2" href="/">Express Bank</a>
         <div class="navbar-text d-flex flex-column text-end">
             <span>
-                Welcome, <%= name %>
+                Welcome, <%- locals.userFirstName %>
             </span>
             <span>
-                Account Number: <%= accountNumber %>
+                Login ID: <%- locals.userLoginId %>
             </span>
+            <a href="/logout"><button class="btn btn-outline-secondary mt-1">Logout</button></a>
         </div>
     </nav>
-    <div class="d-flex justify-content-between">
-        <h1 class="m-3">Transfer funds</h1>
+    <div class="d-flex justify-content-between align-items-center">
+        <h1 class="m-3">Elevate Roles</h1>
         <div class="d-flex align-items-center p-3 gap-3">
             <a href="/profile"><button class="btn btn-primary">View Profile</button></a>
-            <a href="/"><button class="btn btn-outline-secondary">Logout</button></a>
         </div>
     </div>
     <div class="container-fluid px-0">
-        <div class="rounded d-flex justify-content-center gap-5">
+        <div class="rounded d-flex justify-content-center gap-5 mt-5">
             <div class="p-3 shadow-lg bg-light" style="width: 500px;">
                 <div class="d-flex justify-content-center mt-3">
-                    <form onsubmit="return handleElevate(event);" method="post">
+                    <form onsubmit="return handleUpdate(event);" method="post">
                         <div class="container p-0" style="width: 300px;">
-                            <label for="accountNumber">Customer Account Number</label>
-                            <input type="number" id="customerAccountNumber" name="customerAccountNumber" class="form-control" autofocus="autofocus" placeholder="Enter customer account number" required>
-                            <label for="accountType" class="mt-3">Role Level</label>
-                            <select name="accountType" id="accountType" class="form-select" required>
+                            <label for="userLoginIdToUpdate">User Login ID to Update</label>
+                            <input type="number" id="userLoginIdToUpdate" name="userLoginIdToUpdate" class="form-control" autofocus="autofocus" placeholder="Enter login ID">
+                            <label for="desiredUserType" class="mt-3">Role Level</label>
+                            <select name="desiredUserType" id="desiredUserType" class="form-select">
                                 <option value="employee" selected>Employee</option>
                                 <option value="admin">Admin</option>
                                 <option value="customer">Customer</option>
                             </select>
                             <p id="message" class="text-danger mt-3">
-                                PROBLEM MESSAGE HERE
+                                <%- locals.message %>
+                            </p>
+                            <p id="success_message" class="text-success mt-3">
+                                <%- locals.success_message %>
                             </p>
                         </div>
                         <div class="text-end">
@@ -60,7 +69,7 @@
         </div>
     </div>
     <div class="rounded d-flex justify-content-center mt-4">
-        <button type="button" class="btn btn-primary" onclick="window.location.href='/admin'">Return to admin dashboard</button>
+        <a href="/dashboard"><button type="button" class="btn btn-outline-primary">Back to dashboard</button></a>
     </div>
 </body>
 </html>
