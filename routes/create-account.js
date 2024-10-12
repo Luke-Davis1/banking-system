@@ -26,13 +26,15 @@ router.post('/', function(req, res, next) {
         req.session.userFirstName = firstName;
         req.session.loggedIn = true;
         req.session.userLoginId = new_user_login_id;
+        req.session.salt = salt;
         // Everyone is a customer by default on registration
-        req.session.loggedInUserType = "customer";
+        req.session.userType = "customer";
         req.session.save(function(err) {
           if (err) {
               throw err;
           }
           console.log("create-account.js: Successful registration, cookie is: " + req.session.userLoginId);
+          console.log("create-account.js: Successful registration, salt is: " + req.session.salt);
 
           // redirect to the home page. Let that redirect the user to the next correct spot
           res.redirect("/");

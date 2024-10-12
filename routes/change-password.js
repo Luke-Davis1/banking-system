@@ -36,6 +36,7 @@ router.get('/', function(req, res, next) {
     });
   } else {
     // normal user changing password on their own behalf
+    console.log("CURRENT STATE OF SALT:", req.session.salt);
     res.render("change-password", {
       userLoginId: req.session.userLoginId,
       userFirstName: req.session.userFirstName,
@@ -60,6 +61,10 @@ router.post("/", function(req, res, next) {
           throw err;
         }
 
+        console.log("current user login id: ", req.session.userLoginId);
+        console.log("Current user current salt:", currentSalt);
+        console.log("Current user current hash:", currentHash);
+        console.log(JSON.stringify(rows));
         let userFirstName = rows[0]?.[0]?.first_name || undefined;
         if(userFirstName) {
           // Valid update, change password and hash
